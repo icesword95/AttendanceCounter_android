@@ -6,6 +6,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 
+
+import com.google.gson.Gson ;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -59,6 +61,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A login screen that offers login via email/password.
@@ -88,6 +96,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private RequestQueue mRequestQueue;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+
 
 
     @Override
@@ -96,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         // Set up the login form.
 
-        mRequestQueue =  Volley.newRequestQueue(this);
+        mRequestQueue = Volley.newRequestQueue(this);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -123,6 +136,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+
     }
 
     private void populateAutoComplete() {
@@ -142,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                    .setAction(android.R.string.ok, new OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
                         public void onClick(View v) {
@@ -217,9 +231,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void)null) ;
+            mAuthTask.execute((Void) null);
         }
     }
+
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return true;
@@ -229,6 +244,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //TODO: Replace this with your own logic
         return password.length() > 1;
     }
+
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -275,7 +291,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Select only email addresses.
                 ContactsContract.Contacts.Data.MIMETYPE +
                         " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                                                                     .CONTENT_ITEM_TYPE},
+                .CONTENT_ITEM_TYPE},
 
                 // Show primary email addresses first. Note that there won't be
                 // a primary email address if the user hasn't specified one.
@@ -299,12 +315,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
+
+
+
+
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
                 ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
         };
-
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
@@ -352,13 +371,44 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }*/
             String loginurl = "http://222.29.97.45:9000/auth/signin/";
-            Log.i("test",loginurl);
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST,loginurl,
+            Log.i("test", loginurl);
+            int success  =0 ;
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, loginurl,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+
                             Log.i("TAG", response);
+                            JSONObject jsonres = null;
+                            try {
+                                jsonres = new JSONObject(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //Log.i("TAG", "dsd");
+                            int suc = -1 ;
+                            try {
+                                suc =jsonres.getInt("res");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            if (suc == 1) {
+                                //Log.i("TAG", "success");
+                                try {
+                                    int uid = jsonres.getInt("uid") ;
+                                    Intent intent = new Intent(LoginActivity.this,GroupselectActivity.class) ;
+                                    intent.putExtra("uid",uid) ;
+                                    startActivity(intent) ;
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else{
+
+
+                            }
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -375,10 +425,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return map;
                 }
             };
-            Log.i("test",mEmail);
+            Log.i("test", mEmail);
             mRequestQueue.add(stringRequest);
             // TODO: register the new account here.
-            return true;
+            return true ;
         }
 
         @Override

@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile project(':volley-master')
+    compile 'com.google.code.gson:gson:2.2.4'
 }
