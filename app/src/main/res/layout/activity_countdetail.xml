@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="以往签到"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/title_countdetail"
+        android:background="#66ddcc"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView_countdetail_1"
+        android:text="签到日期"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_countdetail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="62dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+
+        />
+    <TextView
+        android:id="@+id/textView_countdetail_2"
+        android:text="2016.10.27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/textView_countdetail_1"
+        android:layout_alignBottom="@+id/textView_countdetail_1"
+        android:layout_toRightOf="@+id/textView_countdetail_1"
+        android:layout_toEndOf="@+id/textView_countdetail_1"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp" />
+    <TextView
+        android:text="已签到人数"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/textView_countdetail_3"
+        android:layout_below="@+id/textView_countdetail_1"
+        android:layout_marginTop="40dp"
+        android:layout_alignLeft="@+id/textView_countdetail_1"
+        android:layout_alignStart="@+id/textView_countdetail_1"
+        />
+    <TextView
+        android:text="3/11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/textView_coutdetail_4"
+        android:layout_below="@+id/textView_countdetail_2"
+        android:layout_alignLeft="@id/textView_countdetail_2"
+        android:layout_alignBaseline="@id/textView_countdetail_3"
+        />
+    <TextView
+        android:text="已签到名单"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:id="@+id/textView_countdetail_5"
+        android:layout_below="@+id/textView_countdetail_3"
+        android:layout_marginTop="40dp"
+        android:gravity="left"
+
+        />
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView_countdetail_5">
+    </ListView>
+
+</RelativeLayout>

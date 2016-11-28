@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="软件工程"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/title_group"
+        android:background="#66ddcc"/>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@id/title_group"
+
+        >
+    </ListView>
+    <Button
+        android:id="@+id/button_group_1"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@android:id/list"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="开始视频签到"
+        android:background="@color/colorButton"/>
+    <Button
+        android:id="@+id/button_group_2"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@android:id/list"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="开始图片签到"
+        android:background="@color/colorButton"
+        />
+    <Button
+        android:id="@+id/button_group_3"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/button_group_1"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="成员管理"
+        android:background="@color/colorButton"/>
+    <Button
+        android:id="@+id/button_group_4"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/button_group_2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="以往签到"
+        android:background="@color/colorButton"
+        />
+
+
+</RelativeLayout>

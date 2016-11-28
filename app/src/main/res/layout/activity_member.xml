@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="成员管理"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/title_member"
+        android:background="#66ddcc"/>
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@id/title_member"
+
+        >
+    </ListView>
+    <Button
+        android:id="@+id/button_member_1"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_below="@android:id/list"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="增加成员"
+        android:background="@color/colorButton"/>
+    <Button
+        android:id="@+id/button_member_2"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_below="@android:id/list"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="删除成员"
+        android:background="@color/colorButton"
+        />
+</RelativeLayout>

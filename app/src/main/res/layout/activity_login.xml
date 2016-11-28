@@ -1,0 +1,107 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    tools:context="com.example.zhouzhou.attendancecounter.LoginActivity"
+    android:layout_weight="1"
+    android:weightSum="1"
+  >
+
+    <!-- Login progress -->
+
+
+    <TextView
+        android:text="Attendence Counter"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/title_login"
+        android:background="#66ddcc"/>
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:layout_marginTop="100dp">
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/email"
+                    android:background="#d3d3d3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="用户名"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+               >
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorInput"
+                android:hint="密码"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_gravity="center"
+                android:id="@+id/email_sign_in_button"
+                android:background="@color/colorButton"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:text="登录"
+                android:textSize="20sp"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+    <Button
+        android:text="注册"
+        android:layout_width="102dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#98aadd"
+        android:id="@+id/button_register"
+        android:layout_gravity="end" />
+
+</LinearLayout>
