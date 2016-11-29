@@ -8,5 +8,6 @@ public class Constant{
     public static String baseurl = "http://222.29.97.45:9000/";
     public static String signin = "auth/signin/";
     public static String getActivity = "manage/getActivity/ ";
+    public static String getAttendee = "manage/getAttendee/";
 
 }

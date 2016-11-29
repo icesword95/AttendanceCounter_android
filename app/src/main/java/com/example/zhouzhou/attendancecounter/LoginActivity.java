@@ -7,6 +7,7 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 
 
+import com.example.zhouzhou.attendancecounter.constant.Constant;
 import com.google.gson.Gson ;
 import android.content.Context;
 import android.content.Intent;
@@ -370,7 +371,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return pieces[1].equals(mPassword);
                 }
             }*/
-            String loginurl = "http://222.29.97.45:9000/auth/signin/";
+            String loginurl = Constant.baseurl+ Constant.signin;
             Log.i("test", loginurl);
             int success  =0 ;
             StringRequest stringRequest = new StringRequest(Request.Method.POST, loginurl,

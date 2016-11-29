@@ -34,13 +34,13 @@ import java.util.Map;
 
 public class GroupselectActivity extends ListActivity {
     private RequestQueue mRequestQueue;
+    private int uid ;
     protected  void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupselect);
         mRequestQueue = Volley.newRequestQueue(this) ;
-
         Intent intent = getIntent();
-        final int uid = intent.getIntExtra("uid",-1) ;
+        uid = intent.getIntExtra("uid",-1) ;
         if(uid!= -1) {
             String Groupurl = Constant.baseurl+ Constant.getActivity ;
             Log.i("test",Groupurl) ;
@@ -51,14 +51,19 @@ public class GroupselectActivity extends ListActivity {
 
                                 Log.i("test",response);
                             try {
-                                JSONArray jsonres = new JSONArray(response) ;
-                                List<String> list = new ArrayList<String>();
-                                for(int i = 0 ;i<jsonres.length();i++)
-                                {
-                                    list.add(jsonres.getString(i)) ;
+                                JSONObject jsonres = new JSONObject(response) ;
+                                int suc = jsonres.getInt("res");
+                                if(suc ==1) {
+                                    JSONArray jsonarray = jsonres.getJSONArray("activity") ;
+                                    List<String> list = new ArrayList<String>();
+                                    for (int i = 0; i < jsonarray.length(); i++) {
+                                        JSONObject temjson = jsonarray.getJSONObject(i) ;
+                                        list.add(temjson.getString("activityName"));
+                                    }
+                                    ArrayAdapter adapter = new ArrayAdapter(GroupselectActivity.this , android.R.layout.simple_list_item_1, list);
+                                    setListAdapter(adapter);
+
                                 }
-                                ArrayAdapter adapter =new ArrayAdapter(GroupselectActivity.this,android.R.layout.simple_list_item_1,list);
-                                setListAdapter(adapter);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -77,7 +82,7 @@ public class GroupselectActivity extends ListActivity {
                 protected Map<String, String> getParams() {
                     //在这里设置需要post的参数
                     Map<String, String> map = new HashMap<String, String>();
-                    map.put("uid", Integer.toString(uid));
+                    map.put("managerId", Integer.toString(uid));
                     return map;
                 }
             };
@@ -87,9 +92,54 @@ public class GroupselectActivity extends ListActivity {
     }
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+        String Groupurl = Constant.baseurl+ Constant.getActivity ;
+        Log.i("test",Groupurl) ;
+        final int pos = position ;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Groupurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("test",response);
+                        try {
+                            JSONObject jsonres = new JSONObject(response) ;
+                            int suc = jsonres.getInt("res");
+                            if(suc ==1) {
+                                JSONArray jsonarray = jsonres.getJSONArray("activity") ;
+                                JSONObject temjson= jsonarray.getJSONObject(pos) ;
+                                String activityName = temjson.getString("activityName");
+                                int activityId  = temjson.getInt("activityId") ;
+                                Intent intent =new Intent(GroupselectActivity.this,GroupActivity.class);
+                                Log.i("uid",Integer.toString(uid)) ;
+                                intent.putExtra("managerId",uid) ;
+                                intent.putExtra("activityId",activityId);
+                                intent.putExtra("activityName",activityName) ;
+                                startActivity(intent);
 
-        String s =((TextView)v).getText().toString();
-        Toast.makeText(this,"提示"+position+s,Toast.LENGTH_LONG).show();
-        super.onListItemClick(l, v, position, id);
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //JSONObject jsonres = new JSONObject(response) ;
+                        //jsonres.getJSONArray("")
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", error.getMessage(), error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //在这里设置需要post的参数
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("managerId", Integer.toString(uid));
+                return map;
+            }
+        };
+        mRequestQueue.add(stringRequest) ;
     }
 }
