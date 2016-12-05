@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,50 +26,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by zhouzhou on 2016/11/1.
+ * Created by zhouzhou on 2016/12/4.
  */
 
-public class RegisterActivity extends AppCompatActivity {
-    private AutoCompleteTextView username ;
-    private EditText password ;
+public class AddactivityActivity  extends AppCompatActivity {
+    private EditText text;
     private RequestQueue mRequestQueue;
-    private TextView HintText ;
+    private int uid ;
+    private EditText input ;
     @Override
     protected  void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_addactivity);
         mRequestQueue = Volley.newRequestQueue(this) ;
-        username = (AutoCompleteTextView)findViewById(R.id.email_register) ;
-        password = (EditText)findViewById(R.id.password_register) ;
-        HintText = (TextView)findViewById(R.id.register_hint) ;
-
-        Button registerbtn = (Button)findViewById(R.id.email_register_button) ;
-        registerbtn.setOnClickListener(new View.OnClickListener()
-        {
+        Intent intent = getIntent() ;
+        uid = intent.getIntExtra("uid",-1) ;
+        Log.i("test",Integer.toString(uid)) ;
+        Button btn1  =(Button)findViewById(R.id.button_addactivity) ;
+        final TextView textView = (TextView)findViewById(R.id.textView_addactivity_2);
+        input = (EditText)findViewById(R.id.input_addactivity_2);
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String mUser = username.getText().toString() ;
-                String mPass = password.getText().toString() ;
-                final String muser = mUser ;
-                final String mpass = mPass ;
-                View focusView = null ;
-                if(TextUtils.isEmpty(mUser))
-                {
-                    username.setError("请输入用户名");
-                    focusView = username ;
-                    focusView.requestFocus();
+                String temstr = input.getText().toString();
+                if(TextUtils.isEmpty(temstr)){
+                    input.setError("请输入小组名字");
+                    View focusview =input ;
+                    focusview.requestFocus() ;
                     return ;
                 }
-                if(TextUtils.isEmpty(mPass))
-                {
-                    password.setError("请输入密码");
-                    focusView = password ;
-                    focusView.requestFocus();
-                    return ;
-                }
-                String registerurl = Constant.baseurl+Constant.register ;
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, registerurl,
+                String addactivityurl = Constant.baseurl+Constant.addActivity ;
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, addactivityurl,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -82,31 +68,31 @@ public class RegisterActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 int suc = -1 ;
+                                String temstr ;
                                 try {
                                     suc =jsonres.getInt("res");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
-
-                                if (suc == 1) {
-                                    HintText.setText("注册成功！");
-                                }
-                                else{
-                                    String temhint ="";
+                                if(suc ==0)
+                                {
+                                    String msg = "" ;
                                     try {
-                                        temhint = jsonres.getString("msg") ;
+                                        msg = jsonres.getString("msg") ;
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                    Log.i("TAG", temhint );
-                                    if(temhint.equals("username exits")){
-                                        username.setError("该用户名已存在");
-                                        View viewfocus = username ;
-                                        viewfocus.requestFocus() ;
-
+                                    if(msg.equals("activity exists"))
+                                    {
+                                        input.setError("小组名已存在");
+                                        View temview = input ;
+                                        temview.requestFocus() ;
                                     }
-                                    HintText.setText("注册失败！");
+                                    textView.setText("创建小组失败");
+
+                                }
+                                else{
+                                    textView.setText("创建小组成功");
                                 }
 
                             }
@@ -119,9 +105,10 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() {
                         //在这里设置需要post的参数
+
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("username", muser);
-                        map.put("password", mpass);
+                        map.put("managerId", Integer.toString(uid));
+                        map.put("activityName", input.getText().toString());
                         return map;
                     }
                 };

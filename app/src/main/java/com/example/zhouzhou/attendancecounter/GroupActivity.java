@@ -116,6 +116,8 @@ public class GroupActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroupActivity.this,MemberActivity.class) ;
+                intent.putExtra("managerId",managerId) ;
+                intent.putExtra("activityId",activityId);
                 startActivity(intent) ;
             }
         });
@@ -123,6 +125,8 @@ public class GroupActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroupActivity.this,PastcountActivity.class) ;
+                intent.putExtra("managerId",managerId) ;
+                intent.putExtra("activityId",activityId);
                 startActivity(intent) ;
             }
         });

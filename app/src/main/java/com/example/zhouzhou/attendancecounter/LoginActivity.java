@@ -133,7 +133,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
+        Button registerbutton = (Button) findViewById(R.id.button_register) ;
+        registerbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class) ;
 
+                startActivity(intent);
+            }
+        });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
@@ -407,7 +415,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 }
                             }
                             else{
-
+                                showProgress(false);
 
                             }
                         }
@@ -426,8 +434,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return map;
                 }
             };
-            Log.i("test", mEmail);
+
             mRequestQueue.add(stringRequest);
+            //Log.i("test", mEmail);
             // TODO: register the new account here.
             return true ;
         }
@@ -438,7 +447,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

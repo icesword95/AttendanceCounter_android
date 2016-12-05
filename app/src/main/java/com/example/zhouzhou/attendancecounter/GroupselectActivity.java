@@ -35,59 +35,71 @@ import java.util.Map;
 public class GroupselectActivity extends ListActivity {
     private RequestQueue mRequestQueue;
     private int uid ;
+    protected  void onResume(){
+        super.onResume();
+        mRequestQueue = Volley.newRequestQueue(this) ;
+        String Groupurl = Constant.baseurl+ Constant.getActivity ;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Groupurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.i("test",response);
+                        try {
+                            JSONObject jsonres = new JSONObject(response) ;
+                            int suc = jsonres.getInt("res");
+                            if(suc ==1) {
+                                JSONArray jsonarray = jsonres.getJSONArray("activity") ;
+                                List<String> list = new ArrayList<String>();
+                                for (int i = 0; i < jsonarray.length(); i++) {
+                                    JSONObject temjson = jsonarray.getJSONObject(i) ;
+                                    list.add(temjson.getString("activityName"));
+                                }
+                                ArrayAdapter adapter = new ArrayAdapter(GroupselectActivity.this , android.R.layout.simple_list_item_1, list);
+                                setListAdapter(adapter);
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //JSONObject jsonres = new JSONObject(response) ;
+                        //jsonres.getJSONArray("")
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", error.getMessage(), error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //在这里设置需要post的参数
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("managerId", Integer.toString(uid));
+                return map;
+            }
+        };
+        mRequestQueue.add(stringRequest) ;
+    };
     protected  void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupselect);
+
         mRequestQueue = Volley.newRequestQueue(this) ;
         Intent intent = getIntent();
         uid = intent.getIntExtra("uid",-1) ;
-        if(uid!= -1) {
-            String Groupurl = Constant.baseurl+ Constant.getActivity ;
-            Log.i("test",Groupurl) ;
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, Groupurl,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+        Button btn1 = (Button)findViewById(R.id.button_groupselect) ;
+        btn1.setOnClickListener(new View.OnClickListener(){
 
-                                Log.i("test",response);
-                            try {
-                                JSONObject jsonres = new JSONObject(response) ;
-                                int suc = jsonres.getInt("res");
-                                if(suc ==1) {
-                                    JSONArray jsonarray = jsonres.getJSONArray("activity") ;
-                                    List<String> list = new ArrayList<String>();
-                                    for (int i = 0; i < jsonarray.length(); i++) {
-                                        JSONObject temjson = jsonarray.getJSONObject(i) ;
-                                        list.add(temjson.getString("activityName"));
-                                    }
-                                    ArrayAdapter adapter = new ArrayAdapter(GroupselectActivity.this , android.R.layout.simple_list_item_1, list);
-                                    setListAdapter(adapter);
-
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            //JSONObject jsonres = new JSONObject(response) ;
-                                //jsonres.getJSONArray("")
-
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("TAG", error.getMessage(), error);
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    //在这里设置需要post的参数
-                    Map<String, String> map = new HashMap<String, String>();
-                    map.put("managerId", Integer.toString(uid));
-                    return map;
-                }
-            };
-            mRequestQueue.add(stringRequest) ;
-        }
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupselectActivity.this,AddactivityActivity.class);
+                intent.putExtra("uid",uid) ;
+                startActivity(intent);
+            }
+        });
 
     }
     @Override

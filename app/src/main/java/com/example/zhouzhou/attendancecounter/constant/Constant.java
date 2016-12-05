@@ -9,5 +9,7 @@ public class Constant{
     public static String signin = "auth/signin/";
     public static String getActivity = "manage/getActivity/ ";
     public static String getAttendee = "manage/getAttendee/";
-
+    public static String register = "auth/signup/" ;
+    public static String addActivity = "manage/editActivity/" ;
+    public static String deletememeber = "manage/deleteAttendee/" ;
 }
