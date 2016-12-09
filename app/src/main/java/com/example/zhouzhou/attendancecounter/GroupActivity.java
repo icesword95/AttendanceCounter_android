@@ -37,13 +37,10 @@ public class GroupActivity extends ListActivity {
     private int managerId ;
     private int activityId ;
     @Override
-    protected  void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group);
-        mRequestQueue = Volley.newRequestQueue(this) ;
-        String getAttendeeurl = Constant.baseurl+Constant.getAttendee ;
-        Log.i("url",getAttendeeurl) ;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, getAttendeeurl,
+    protected void  onResume(){
+        super.onResume();
+        String Attendeeurl = Constant.baseurl+ Constant.getAttendee ;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Attendeeurl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -67,8 +64,6 @@ public class GroupActivity extends ListActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        //JSONObject jsonres = new JSONObject(response) ;
-                        //jsonres.getJSONArray("")
 
                     }
                 }, new Response.ErrorListener() {
@@ -86,6 +81,12 @@ public class GroupActivity extends ListActivity {
             }
         };
         mRequestQueue.add(stringRequest) ;
+    }
+    @Override
+    protected  void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_group);
+        mRequestQueue = Volley.newRequestQueue(this) ;
         Intent intent = getIntent() ;
         managerId = intent.getIntExtra("managerId",-1) ;
         String activityName = intent.getStringExtra("activityName") ;

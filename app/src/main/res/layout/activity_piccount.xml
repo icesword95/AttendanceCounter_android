@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,45 +15,15 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="签到日期"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_piccount"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="62dp"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="50dp"
-        android:textSize="20sp"
-        android:id="@+id/textView_piccount_1"
-        />
-
-
-    <TextView
-        android:id="@+id/textView_piccount_2"
-        android:text="2016.11.3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_alignBaseline="@+id/textView_piccount_1"
-        android:layout_alignBottom="@+id/textView_piccount_1"
-        android:layout_toRightOf="@+id/textView_piccount_1"
-        android:layout_toEndOf="@+id/textView_piccount_1"
-        android:layout_marginLeft="50dp"
-        android:layout_marginStart="50dp" />
     <TextView
         android:text="已签到人数"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:id="@+id/textView_piccount_3"
-        android:layout_below="@+id/textView_piccount_1"
-        android:layout_marginTop="40dp"
-        android:layout_alignLeft="@+id/textView_piccount_1"
-        android:layout_alignStart="@+id/textView_piccount_1"
-        />
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/title_piccount"
+        android:layout_marginLeft="100dp" />
 
     <TextView
         android:text="3/11"
@@ -60,28 +31,34 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:id="@+id/textView_piccount_4"
-        android:layout_alignBaseline="@+id/textView_piccount_3"
-        android:layout_alignBottom="@+id/textView_piccount_3"
-        android:layout_alignLeft="@+id/textView_piccount_2"
-        android:layout_alignStart="@+id/textView_piccount_2" />
+        android:layout_alignBaseline="@id/textView_piccount_3"
+        android:layout_alignBottom="@id/textView_piccount_3"
+        android:layout_toRightOf="@id/textView_piccount_3"
+        android:layout_marginLeft="20dp"/>
 
     <ListView
 
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="180dp"
         android:layout_below="@id/textView_piccount_3">
 
     </ListView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/piccount_image"
+        android:adjustViewBounds="true"
+        android:layout_below="@android:id/list"
+        android:layout_centerHorizontal="true"/>
     <Button
         android:id="@+id/button_piccount_1"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="开始拍摄"
         android:background="@color/colorButton"
-        android:layout_below="@android:id/list"
-        android:layout_marginTop="10dp"
 
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
     <Button
@@ -93,6 +70,12 @@
         android:layout_alignTop="@id/button_piccount_1"
         android:layout_alignParentRight="true"
          />
+
+
+
+
+
+
 
 
 </RelativeLayout>

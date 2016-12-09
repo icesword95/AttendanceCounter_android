@@ -12,4 +12,5 @@ public class Constant{
     public static String register = "auth/signup/" ;
     public static String addActivity = "manage/editActivity/" ;
     public static String deletememeber = "manage/deleteAttendee/" ;
+    public static String addmember = "manage/editAttendee/" ;
 }
